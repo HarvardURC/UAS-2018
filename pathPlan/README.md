@@ -13,3 +13,9 @@ To see the flags you can use follow the executable with the `-h` flag.
 Murray Tannock
 
 1908925149
+
+
+- Will Bryk:
+I played around with this code before. It\'92s pretty cool, you could try out different algorithms for getting from the red to the green.
+
+You can place circular obstacles by clicking the screen. Press s to draw the best path. I forget the other controls, but you could find them in the code! I changed the code so that it doesn't create the path iteratively one step at a time, but just jumps to the final path. I would explore the code, it took me a few hours to grasp it, but it makes sense in the end.
