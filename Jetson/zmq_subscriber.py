@@ -1,11 +1,34 @@
+# import zmq
+
+# context = zmq.Context()
+# socket = context.socket(zmq.SUB)
+# # accept all topics (prefixed) - default is none
+# socket.setsockopt_string(zmq.SUBSCRIBE, "")
+# socket.bind("tcp://*:5556")
+
+# while True:
+#     message = socket.recv_string()
+#     print(message)
+
 import zmq
 
-context = zmq.Context()
-socket = context.socket(zmq.SUB)
-# accept all topics (prefixed) - default is none
-socket.setsockopt_string(zmq.SUBSCRIBE, "")
-socket.bind("tcp://*:5556")
+def main():
+    """ main method """
 
-while True:
-    message = socket.recv_string()
-    print(message)
+    # Prepare our context and publisher
+    context    = zmq.Context()
+    subscriber = context.socket(zmq.SUB)
+    subscriber.connect("tcp://localhost:5563")
+    subscriber.setsockopt(zmq.SUBSCRIBE, b"B")
+
+    while True:
+        # Read envelope with address
+        [address, contents] = subscriber.recv_multipart()
+        print("[%s] %s" % (address, contents))
+
+    # We never get here but clean up anyhow
+    subscriber.close()
+    context.term()
+
+if __name__ == "__main__":
+    main()
