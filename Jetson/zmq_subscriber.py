@@ -3,6 +3,7 @@
 # import time, sys, argparse, math
 
 import zmq
+import json
 
 def main():
     # Prepare our context and publisher
@@ -12,14 +13,20 @@ def main():
     # vehicle=connect(connection_string, wait_ready=True,heartbeat_timeout=30, baud=921600)
 
     context    = zmq.Context()
-    subscriber = context.socket(zmq.SUB)
+    subscriber = context.socket(zmq.PULL)
     subscriber.connect("tcp://localhost:5563")
-    subscriber.setsockopt(zmq.SUBSCRIBE, "Latitude")
+    #subscriber.setsockopt(zmq.SUBSCRIBE, "Mission")
 
     while True:
         # Read envelope with address
-        [address, contents] = subscriber.recv_multipart()
-        print("[%s] %s" % (address, contents))
+        res = subscriber.recv_json()
+	print type(res)
+
+	d = json.dumps(res)
+	data = json.loads(d)
+	print data[1]
+
+
 
         # print "Type: %s" %vehicle._vehicle_tupe
         # print "Armed:%s" %vehicle.armed
