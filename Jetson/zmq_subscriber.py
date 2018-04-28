@@ -20,12 +20,10 @@ def main():
     while True:
         # Read envelope with address
         res = subscriber.recv_json()
-	print type(res)
-
-	d = json.dumps(res)
-	data = json.loads(d)
-	print data[1]
-
+        print type(res)
+        d = json.dumps(res)
+        data = json.loads(d)
+        print data[1]
 
 
         # print "Type: %s" %vehicle._vehicle_tupe
